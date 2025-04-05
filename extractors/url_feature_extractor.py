@@ -988,6 +988,9 @@ class URLFeaturesExtractor(IURLFeaturesExtractor):
         int
             Google PageRank.
         """
+        if not self.__OPR_API_KEY:
+            return -1
+
         try:
             response = httpx.get(
                 'https://openpagerank.com/api/v1.0/getPageRank',
