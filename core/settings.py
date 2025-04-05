@@ -6,12 +6,13 @@ import os
 from dataclasses import dataclass
 from typing import Literal
 
-from sqlactive import DBConnection
 from starlette.config import Config
 from starlette.datastructures import CommaSeparatedStrings, Secret
 from starlette.templating import Jinja2Templates
 
+from extractors.url_feature_extractor import URLFeaturesExtractor
 from utils.func import check_file_exists
+from utils.prediction import PredictionModel, get_most_recent_model
 
 from .definitions import ROOT_DIR
 
@@ -184,48 +185,14 @@ class LocaleConfig:
 
 
 @dataclass
-class AuthConfig:
-    """Authentication configuration."""
+class PredictionConfig:
+    """Prediction configuration."""
 
-    ACCESS_TOKEN_SECRET: str
-    """Access token secret."""
+    OPR_API_KEY: str
+    """Open PageRank API key."""
 
-    ACCESS_TOKEN_EXPIRES_MINUTES: int
-    """Access token life time in minutes.
-
-    Default: ``30``
-    """
-
-    ACCESS_TOKEN_ENCODING_ALGORITHM: str
-    """Access token encoding algorithm.
-
-    Default: ``HS256``
-    """
-
-
-@dataclass
-class DatabaseConfig:
-    """Database configuration."""
-
-    DATABASE_URL: str
-    """Database URL.
-
-    Example: ``postgresql://postgres:postgres@localhost:5432/postgres``
-    """
-
-    FETCH_LIMIT: int = 100
-    """Limit for fetching data from the database.
-
-    Default: ``100``
-    """
-
-
-@dataclass
-class AdminConfig:
-    """Admin interface configuration."""
-
-    SESSION_SECRET_KEY: str
-    """Session secret key."""
+    model: PredictionModel
+    """Prediction model."""
 
 
 class Settings:
@@ -290,31 +257,11 @@ class Settings:
     )
     """Locale configuration."""
 
-    auth = AuthConfig(
-        ACCESS_TOKEN_SECRET=str(
-            config('ACCESS_TOKEN_SECRET', cast=Secret, default='')
-        ),
-        ACCESS_TOKEN_EXPIRES_MINUTES=config(
-            'ACCESS_TOKEN_EXPIRES_MINUTES', cast=int, default=30
-        ),
-        ACCESS_TOKEN_ENCODING_ALGORITHM=config(
-            'ACCESS_TOKEN_ENCODING_ALGORITHM', default='HS256'
-        ),
+    prediction = PredictionConfig(
+        OPR_API_KEY=str(config('OPR_API_KEY', cast=Secret, default='')),
+        model=get_most_recent_model('models'),
     )
-    """Authentication configuration."""
-
-    database = DatabaseConfig(
-        DATABASE_URL=str(config('DATABASE_URL', cast=Secret, default='')),
-        FETCH_LIMIT=config('FETCH_LIMIT', cast=int, default=100),
-    )
-    """Database configuration."""
-
-    admin = AdminConfig(
-        SESSION_SECRET_KEY=str(
-            config('SESSION_SECRET_KEY', cast=Secret, default='foo-bar-baz')
-        ),
-    )
-    """Admin interface configuration."""
+    """Prediction configuration."""
 
     templates = Jinja2Templates('templates')
     """Templates."""
@@ -344,25 +291,6 @@ class Settings:
         )
 
     @classmethod
-    def create_db_connection(cls) -> DBConnection:
-        """Creates a database connection.
-
-        Returns
-        -------
-        DBConnection
-            Database connection.
-
-        Raises
-        ------
-        ValueError
-            If ``DATABASE_URL`` is not set.
-        """
-        database_url = str(cls.database.DATABASE_URL)
-        if not database_url:
-            raise ValueError('environment variable DATABASE_URL is not set')
-        return DBConnection(str(database_url), echo=False)
-
-    @classmethod
     def get_server_url(cls) -> str:
         """Gets the server URL.
 
@@ -374,3 +302,14 @@ class Settings:
         return (
             f'{cls.server.HTTP_SCHEMA}://{cls.server.HOST}:{cls.server.PORT}'
         )
+
+    @classmethod
+    def url_features_extractor(cls) -> URLFeaturesExtractor:
+        """Factory method for the URL features extractor.
+
+        Returns
+        -------
+        URLFeaturesExtractor
+            URL features extractor.
+        """
+        return URLFeaturesExtractor(cls.prediction.OPR_API_KEY)

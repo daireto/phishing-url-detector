@@ -1,26 +1,44 @@
 {
-    "an_error_has_occurred": "An error has occurred: {error}.",
-    "auth": {
-        "incorrect_credentials": "Incorrect username or password.",
-        "invalid_token": "The session token is invalid.",
-        "expired_token": "The session has expired, please log in again.",
-        "token_schema_not_supported": "The token schema '{schema}' is not supported.",
-        "could_not_decode_token": "Could not decode token: {error}.",
-        "unauthenticated": "You are not authenticated.",
-        "unauthorized": "You do not have the necessary permissions to perform this action."
+    "an_error_has_occurred": "An error has occurred: {error}",
+    "validation_error": "Validation error: {error}",
+    "features": {
+        "url_length": "URL length",
+        "domain_length": "Domain length",
+        "path_depth": "Path depth",
+        "nb_subdomains": "Number of subdomains",
+        "https_in_hostname": "Whether HTTPS is in the hostname",
+        "shortened_url": "Whether the URL is shortened",
+        "abnormal_subdomain": "Whether the subdomain is abnormal",
+        "suspicious_tld": "Whether the TLD is suspicious",
+        "is_ip": "Whether the URL is an IP address",
+        "is_http": "Whether the URL is HTTP",
+        "has_at": "Whether the URL has @",
+        "has_dash": "Whether the URL has -",
+        "has_double_slash": "Whether the URL has double slash",
+        "nb_equals": "Number of =",
+        "nb_question_mark": "Number of ?",
+        "unregistered_domain": "Whether the domain is unregistered",
+        "domain_age": "Domain age",
+        "domain_end": "Domain end",
+        "unavailable_dns_record": "Whether the DNS record is unavailable",
+        "page_rank": "Google PageRank",
+        "nb_redirects": "Number of redirects",
+        "nb_external_redirects": "Number of external redirects",
+        "domain_not_in_title": "Whether the domain is not in the title",
+        "domain_without_copyright": "Whether the domain is not in the copyright"
     },
-    "user": {
-        "user_already_exists": "The user already exists.",
-        "user_not_found": "The user was not found.",
-        "passwords_mismatch": "The passwords do not match."
-    },
-    "post": {
-        "post_not_found": "The post was not found."
-    },
-    "comment": {
-        "comment_not_found": "The comment was not found."
-    },
-    "reaction": {
-        "reaction_not_found": "The reaction was not found."
-    }
+    "app_title": "Phishing URL Detection",
+    "url_input_placeholder": "Enter a URL below to check if it's legitimate or potentially phishing",
+    "url_error_message": "Please enter a valid URL (e.g., https://example.com)",
+    "check_url": "Check URL",
+    "analyzing_url": "Analyzing URL...",
+    "analysis_results": "Analysis Results",
+    "classification": "Classification",
+    "feature_analysis": "Feature Analysis",
+    "feature": "Feature",
+    "description": "Description",
+    "value": "Value",
+    "phishing": "Phishing",
+    "legitimate": "Legitimate",
+    "api_error_message": "An error occurred while analyzing the URL. Please try again."
 }

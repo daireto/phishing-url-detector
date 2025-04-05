@@ -1,26 +1,44 @@
 {
-    "an_error_has_occurred": "Ha ocurrido un error: {error}.",
-    "auth": {
-        "incorrect_credentials": "Usuario o contraseña incorrectos.",
-        "invalid_token": "El token de sesión no es valido.",
-        "expired_token": "La sesión ha expirado, por favor inicie sesión nuevamente.",
-        "token_schema_not_supported": "El esquema de token '{schema}' no es soportado.",
-        "could_not_decode_token": "No se pudo decodificar el token: {error}.",
-        "unauthenticated": "No ha iniciado sesión.",
-        "unauthorized": "No tiene los permisos suficientes para realizar esta acción."
+    "an_error_has_occurred": "Ha ocurrido un error: {error}",
+    "validation_error": "Error de validación: {error}",
+    "features": {
+        "url_length": "Longitud de la URL",
+        "domain_length": "Longitud del dominio",
+        "path_depth": "Profundidad de la ruta",
+        "nb_subdomains": "Número de subdominios",
+        "https_in_hostname": "Si HTTPS está en el nombre de host",
+        "shortened_url": "Si la URL está acortada",
+        "abnormal_subdomain": "Si el subdominio es anormal",
+        "suspicious_tld": "Si el TLD es sospechoso",
+        "is_ip": "Si la URL es una dirección IP",
+        "is_http": "Si la URL es HTTP",
+        "has_at": "Si la URL tiene @",
+        "has_dash": "Si la URL tiene -",
+        "has_double_slash": "Si la URL tiene doble barra",
+        "nb_equals": "Número de =",
+        "nb_question_mark": "Número de ?",
+        "unregistered_domain": "Si el dominio no está registrado",
+        "domain_age": "Edad del dominio",
+        "domain_end": "Fin del dominio",
+        "unavailable_dns_record": "Si el registro DNS no está disponible",
+        "page_rank": "Google PageRank",
+        "nb_redirects": "Número de redirecciones",
+        "nb_external_redirects": "Número de redirecciones externas",
+        "domain_not_in_title": "Si el dominio no está en el título",
+        "domain_without_copyright": "Si el dominio no está en el copyright"
     },
-    "user": {
-        "user_already_exists": "El usuario ya existe.",
-        "user_not_found": "El usuario no fue encontrado.",
-        "passwords_mismatch": "Las contraseñas no coinciden."
-    },
-    "post": {
-        "post_not_found": "El post no fue encontrado."
-    },
-    "comment": {
-        "comment_not_found": "El comentario no fue encontrado."
-    },
-    "reaction": {
-        "reaction_not_found": "La reacción no fue encontrada."
-    }
+    "app_title": "Detección de URLs de phishing",
+    "url_input_placeholder": "Ingrese una URL a continuación para comprobar si es legítima o potencialmente de phishing",
+    "url_error_message": "Por favor, ingrese una URL válida (por ejemplo, https://example.com)",
+    "check_url": "Comprobar URL",
+    "analyzing_url": "Analizando URL...",
+    "analysis_results": "Resultados del análisis",
+    "classification": "Clasificación",
+    "feature_analysis": "Análisis de características",
+    "feature": "Característica",
+    "description": "Descripción",
+    "value": "Valor",
+    "phishing": "Phishing",
+    "legitimate": "Legítima",
+    "api_error_message": "Ocurrió un error al analizar la URL. Por favor, inténtelo de nuevo."
 }

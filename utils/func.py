@@ -8,6 +8,25 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 
 
+def get_most_recent_file(path: str) -> str | None:
+    """Gets the most recent file in a directory.
+
+    Parameters
+    ----------
+    path : str
+        Path to the directory.
+
+    Returns
+    -------
+    str | None
+        Path to the most recent file.
+    """
+    files = os.listdir(path)
+    if not files:
+        return None
+    return max(files, key=lambda x: os.path.getctime(os.path.join(path, x)))
+
+
 def get_robohash_url(username: str) -> str:
     """Gets the RoboHash URL.
 

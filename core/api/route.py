@@ -14,7 +14,6 @@ from starlette_di import inject_method
 
 from core import logger
 from core.bases.base_router import BaseRouter
-from core.definitions import AUTH_REQUIRED, USE_ODATA
 from core.errors import InvalidRoutePathError
 from core.settings import Settings
 
@@ -101,21 +100,10 @@ class Route(StarletteRoute):
             compile_path(path)
         )
 
-        path_security = (
-            'protected'
-            if getattr(endpoint, AUTH_REQUIRED, False)
-            else 'public'
-        )
         logger.debug(
-            f'Created {path_security} route {path!r} for '
-            f'{endpoint.__qualname__} with '
+            f'Created route {path!r} for {endpoint.__qualname__} with '
             f'methods {self.methods}'
         )
-
-        if getattr(endpoint, USE_ODATA, False):
-            logger.debug(
-                f'Route {path!r} ({endpoint.__qualname__}) uses OData V4 query'
-            )
 
     def __remove_trailing_slash(self, path: str) -> str:
         """Removes trailing ``/`` from ``path``."""

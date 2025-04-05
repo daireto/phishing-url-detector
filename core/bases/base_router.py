@@ -4,7 +4,6 @@ to define routers.
 
 from abc import ABC
 
-from odata_v4_query import ODataQueryOptions, ODataQueryParser
 from starlette.templating import Jinja2Templates
 
 from core import I18N, logger
@@ -17,7 +16,6 @@ from core.api.errors import (
 )
 from core.api.request import Request
 from core.api.responses import ErrorResponse
-from core.settings import Settings
 from utils.func import parse_accept_language
 
 
@@ -32,9 +30,6 @@ class BaseRouter(ABC):
 
     base_path: str = ''
     """Base path for the router endpoints."""
-
-    parser: ODataQueryParser
-    """OData V4 query parser."""
 
     def __init__(
         self, request: Request, templates: Jinja2Templates, base_path: str = ''
@@ -53,7 +48,6 @@ class BaseRouter(ABC):
         self.request = request
         self.templates = templates
         self.base_path = base_path
-        self.parser = ODataQueryParser()
 
     def prev(self) -> None:
         """Pre-configuration function.
@@ -68,20 +62,6 @@ class BaseRouter(ABC):
         if not hasattr(self.request.state, 'language'):
             return None
         return self.request.state.language
-
-    def parse_odata(self) -> ODataQueryOptions:
-        """Parses the OData V4 query from the request URL.
-
-        Returns
-        -------
-        ODataQueryOptions
-            Parsed OData V4 query.
-        """
-        options = self.parser.parse_url(str(self.request.url))
-        if options.top is None or options.top > Settings.database.FETCH_LIMIT:
-            options.top = Settings.database.FETCH_LIMIT
-
-        return options
 
     def error(self, message: str, status_code: int = 500) -> ErrorResponse:
         """Returns a HTTP error response.
@@ -171,10 +151,3 @@ class BaseRouter(ABC):
             logger.warning(e)
         except Exception as e:
             logger.error(f'Could not set locale to I18N: {e}')
-
-    def __get_int_query_param(self, name: str, default: int) -> int:
-        try:
-            value = self.request.query_params.get(name, default)
-            return int(value)
-        except ValueError:
-            return default
